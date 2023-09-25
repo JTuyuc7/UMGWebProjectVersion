@@ -1,0 +1,3 @@
+.DB/compose-variables.env
+./DB/compose-variables.env
+*DB/compose-variables.env
