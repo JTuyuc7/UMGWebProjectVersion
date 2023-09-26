@@ -7,6 +7,7 @@ import com.drivexport.backenddrivexport.service.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -18,6 +19,7 @@ public class ProductServiceImpl implements ProductService {
         super();
         this.productRepository = productRepository;
     }
+
 
     @Override
     public Product saveProduct(Product product) {
@@ -64,6 +66,14 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteById(producId);
     }
 
-
+//    @Override
+//    public Product productInvoice(Integer userId, Integer productId) {
+//        Optional<Product> productFound = Optional.ofNullable(productRepository.singleProductByUserIdAndProductId(userId, productId));
+//        if(productFound.isPresent()){
+//            return productFound.get();
+//        }else {
+//            throw new ResourceNotFoundException("Product", "productId", userId);
+//        }
+//    }
 
 }
