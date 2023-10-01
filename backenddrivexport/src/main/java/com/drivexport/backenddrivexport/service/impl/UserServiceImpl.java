@@ -4,6 +4,7 @@ import com.drivexport.backenddrivexport.exception.ResourceNotFoundException;
 import com.drivexport.backenddrivexport.model.User;
 import com.drivexport.backenddrivexport.repository.UserRepository;
 import com.drivexport.backenddrivexport.service.UserService;
+import com.drivexport.backenddrivexport.utils.CustomResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,15 +31,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getSingleUserByEmailPasword(String email, String password) {
+    public CustomResponse getSingleUserByEmailPasword(String email, String password) {
         Optional<User> singleUserfound = Optional.ofNullable(userRepository.findByEmailAndPassword(email, password));
+        CustomResponse response = new CustomResponse();
 
         if(singleUserfound.isPresent()){
-            return singleUserfound.get();
+            response.setMessage("Please check your credentials.");
+            response.setStatus(400);
         }else {
-            throw new ResourceNotFoundException("User", "email", email);
+            response.setMessage("User found");
+            response.setStatus(200);
         }
+
+        return response;
     }
+
+    @Override
+    public boolean findSinleUserByEmailService(String email) {
+        Optional<User> userfound = Optional.ofNullable(userRepository.findExisitingUserByEmail(email));
+
+        return userfound.isPresent();
+    }
+
 
     //! Apply the same logic to find it by email and password
     @Override

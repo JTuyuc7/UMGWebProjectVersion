@@ -1,6 +1,7 @@
 package com.drivexport.backenddrivexport.service;
 
 import com.drivexport.backenddrivexport.model.User;
+import com.drivexport.backenddrivexport.utils.CustomResponse;
 
 import java.util.List;
 
@@ -12,7 +13,10 @@ public interface UserService {
     List<User> getAllUsers();
 
     //? Get a single User to Login
-    User getSingleUserByEmailPasword(String email, String password );
+    CustomResponse getSingleUserByEmailPasword(String email, String password );
+
+    //? Find single user by email
+    boolean findSinleUserByEmailService(String email);
 
     //!Temporal
     User getSingleUser(Integer id);
