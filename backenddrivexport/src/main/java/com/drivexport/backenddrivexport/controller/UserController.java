@@ -1,16 +1,19 @@
 package com.drivexport.backenddrivexport.controller;
 
 import com.drivexport.backenddrivexport.BodyRequestClasses;
-import com.drivexport.backenddrivexport.exception.ResourceNotFoundException;
 import com.drivexport.backenddrivexport.model.User;
 import com.drivexport.backenddrivexport.service.UserService;
+import com.drivexport.backenddrivexport.utils.CustomResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/users")
 public class UserController {
 
@@ -23,8 +26,18 @@ public class UserController {
 
     //* Create a new User?
     @PostMapping()
-    public ResponseEntity<User> saveUser(@RequestBody User user){
-        return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
+    public CustomResponse saveUser(@RequestBody User user){
+        CustomResponse response = new CustomResponse();
+        if( userService.findSinleUserByEmailService(user.getEmail())){
+            response.setMessage("Please use a different email");
+            response.setStatus(422);
+        }else {
+            response.setStatus(201);
+            User savedUser = userService.saveUser(user);
+            response.setUser(savedUser);
+        }
+
+        return response;
     }
 
     //* Get all data
@@ -35,15 +48,15 @@ public class UserController {
 
     //? Get by email password
     @PostMapping("/login")
-    public ResponseEntity<User> getSingleUserByEmailPasword(@RequestBody BodyRequestClasses loginBodyRequest ){
+    public ResponseEntity<CustomResponse> getSingleUserByEmailPasword(@RequestBody BodyRequestClasses loginBodyRequest ){
         String email = loginBodyRequest.getEmail();
         String password = loginBodyRequest.getPassword();
-        User userData = userService.getSingleUserByEmailPasword(email, password);
-        if(userData != null){
-            return ResponseEntity.ok(userData);
+//        User userData = userService.getSingleUserByEmailPasword(email, password);
+        CustomResponse userFoundData = userService.getSingleUserByEmailPasword(email, password);
+        if(userFoundData != null){
+            return ResponseEntity.ok(userFoundData);
         }else {
-            throw new ResourceNotFoundException("User", "user", email);
-//            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userFoundData);
         }
     }
 
