@@ -53,6 +53,7 @@ public class UserController {
         String password = loginBodyRequest.getPassword();
 //        User userData = userService.getSingleUserByEmailPasword(email, password);
         CustomResponse userFoundData = userService.getSingleUserByEmailPasword(email, password);
+        System.out.println(userFoundData.getUser());
         if(userFoundData != null){
             return ResponseEntity.ok(userFoundData);
         }else {

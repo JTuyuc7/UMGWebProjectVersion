@@ -1,13 +1,33 @@
-import LoginPage from '@/pages/auth/login'
-import { AuthWrapper } from '../ui'
-import { Box } from '@mui/material'
+import { Container } from '@mui/material'
+import { useRouter } from 'next/router'
+export const AuthLayout = ({ children, isAuth }) => {
 
-export const AuthLayout = ({children}) => {
+
   return (
-    <>
-      <AuthWrapper>
-        {children}
-      </AuthWrapper>
-    </>
+    <main
+      style={{
+        // backgroundColor: 'purple',
+        flex: 1,
+        display: 'flex',
+        minHeight: '100vh',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+      className="bg-img"
+    >
+      <Container>{children}</Container>
+    </main>
   )
+}
+
+export const getServerSideProps = async () => {
+
+  const isAuth = false;
+
+    return {
+        props: {
+          isAuth
+        }
+    }
 }
