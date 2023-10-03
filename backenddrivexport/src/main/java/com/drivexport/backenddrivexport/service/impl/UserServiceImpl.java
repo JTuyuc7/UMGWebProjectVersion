@@ -34,13 +34,15 @@ public class UserServiceImpl implements UserService {
     public CustomResponse getSingleUserByEmailPasword(String email, String password) {
         Optional<User> singleUserfound = Optional.ofNullable(userRepository.findByEmailAndPassword(email, password));
         CustomResponse response = new CustomResponse();
-
+        System.out.println(singleUserfound);
         if(singleUserfound.isPresent()){
-            response.setMessage("Please check your credentials.");
-            response.setStatus(400);
-        }else {
             response.setMessage("User found");
             response.setStatus(200);
+            response.setUser(singleUserfound.get());
+        }else {
+            response.setMessage("Please check your credentials.");
+            response.setStatus(400);
+
         }
 
         return response;

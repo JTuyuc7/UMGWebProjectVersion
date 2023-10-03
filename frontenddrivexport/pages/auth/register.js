@@ -1,3 +1,4 @@
+import { AuthLayout } from '@/components/Layouts/AuthLayout'
 import { AuthContext } from '@/context'
 import {
   Box,
@@ -11,7 +12,7 @@ import Link from 'next/link'
 import { useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-const { HeaderComponent, AuthWrapper } = require('@/components/ui')
+const { HeaderComponent } = require('@/components/ui')
 
 const RegisterPage = () => {
   const { registerNewUser } = useContext(AuthContext)
@@ -32,7 +33,7 @@ const RegisterPage = () => {
 
   return (
     <>
-      <AuthWrapper>
+      <AuthLayout>
         <HeaderComponent title={'DriveXport - Register'} />
         <Box
           sx={{
@@ -221,7 +222,7 @@ const RegisterPage = () => {
             </Grid>
           </form>
         </Box>
-      </AuthWrapper>
+      </AuthLayout>
     </>
   )
 }

@@ -1,3 +1,4 @@
+import { AuthLayout } from '@/components/Layouts/AuthLayout'
 import { AuthContext, authReducer } from '@/context'
 import {
   Box,
@@ -12,7 +13,7 @@ import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-const { HeaderComponent, AuthWrapper } = require('@/components/ui')
+const { HeaderComponent } = require('@/components/ui')
 
 const LoginPage = () => {
   const router = useRouter()
@@ -27,7 +28,7 @@ const LoginPage = () => {
   }
   return (
     <>
-      <AuthWrapper>
+      <AuthLayout>
       <HeaderComponent title={'DriveXport - Login'} />
       <Box
         sx={{
@@ -154,7 +155,7 @@ const LoginPage = () => {
           </Grid>
         </form>
         </Box>
-        </AuthWrapper>
+        </AuthLayout>
     </>
   )
 }
