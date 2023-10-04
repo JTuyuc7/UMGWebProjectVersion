@@ -12,8 +12,6 @@ import Link from 'next/link'
 import { useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-const { HeaderComponent } = require('@/components/ui')
-
 const RegisterPage = () => {
   const { registerNewUser } = useContext(AuthContext)
   const {
@@ -33,8 +31,7 @@ const RegisterPage = () => {
 
   return (
     <>
-      <AuthLayout>
-        <HeaderComponent title={'DriveXport - Register'} />
+      <AuthLayout title={'DriveXport - Register'}>
         <Box
           sx={{
             display: 'flex',

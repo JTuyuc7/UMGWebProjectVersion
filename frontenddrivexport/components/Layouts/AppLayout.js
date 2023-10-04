@@ -2,10 +2,10 @@ import { HeaderComponent, SideBarNavigation } from '@/components/ui'
 import { Box, Grid } from '@mui/material'
 import { paletColors } from '@/styles/StylesConstants'
 
-export const AppLayout = ({ children }) => {
+export const AppLayout = ({ children, title }) => {
   return (
     <>
-      <HeaderComponent title={'Drive X Port'} />
+      <HeaderComponent title={title} />
       <main style={{ backgroundColor: 'gray', flex: 1, height: '100vh' }}>
         <Grid container>
           <Grid

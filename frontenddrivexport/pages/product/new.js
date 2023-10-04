@@ -7,7 +7,7 @@ const NewProductForm = () => {
 
   return (
     <>
-      <AppLayout>
+      <AppLayout title={"Drive X Port - New"}>
         New product form
       </AppLayout>
     </>
