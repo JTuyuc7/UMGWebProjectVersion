@@ -1,9 +1,12 @@
 import { Container } from '@mui/material'
 import { useRouter } from 'next/router'
-export const AuthLayout = ({ children, isAuth }) => {
+import { HeaderComponent } from '../ui'
+export const AuthLayout = ({ children, isAuth, title }) => {
 
 
   return (
+    <>
+      <HeaderComponent title={title} />
     <main
       style={{
         // backgroundColor: 'purple',
@@ -17,7 +20,8 @@ export const AuthLayout = ({ children, isAuth }) => {
       className="bg-img"
     >
       <Container>{children}</Container>
-    </main>
+      </main>
+      </>
   )
 }
 

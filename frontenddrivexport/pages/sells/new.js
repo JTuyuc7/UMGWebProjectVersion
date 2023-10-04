@@ -5,7 +5,7 @@ const NewSellForm = () => {
 
   return (
     <>
-      <AppLayout>
+      <AppLayout title={"Drive X Port - Sell"}>
         Realizar ventas aca
       </AppLayout>
     </>

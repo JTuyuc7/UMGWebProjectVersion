@@ -13,8 +13,6 @@ import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-const { HeaderComponent } = require('@/components/ui')
-
 const LoginPage = () => {
   const router = useRouter()
   const { loginUseer } = useContext(AuthContext)
@@ -28,8 +26,7 @@ const LoginPage = () => {
   }
   return (
     <>
-      <AuthLayout>
-      <HeaderComponent title={'DriveXport - Login'} />
+      <AuthLayout title={'DriveXport - Login'}>
       <Box
         sx={{
           display: 'flex',

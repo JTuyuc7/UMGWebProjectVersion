@@ -30,8 +30,6 @@ export const AuthProvier = ({ children }) => {
       }
 
       if (data.status === 200) { 
-        // toast.success('Welcome')
-        // window.history.replaceState(null, '', '/')
         router.replace('/app')
       }
 

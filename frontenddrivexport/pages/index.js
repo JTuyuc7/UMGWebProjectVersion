@@ -1,13 +1,14 @@
-import { AuthLayout, AppLayout } from '@/components/Layouts'
-import { useRouter } from 'next/router';
 import LoginPage from './auth/login';
+import DashboardApp from './app';
 
 export default function Home() {
 
-  const isAuth = false;
+  const isAuth = true;
+
+
   return (
     <>{!isAuth && <LoginPage />}
-      { isAuth && <AppLayout />}
+      { isAuth && <DashboardApp />}
     </>
   )
 }
