@@ -5,6 +5,8 @@ import { CreateOutlined, DeleteOutline } from '@mui/icons-material'
 import { initialTempData } from '@/components/dashboard/constants'
 import { Box, IconButton, Stack, Typography } from '@mui/material'
 import { driveXportApi } from '@/api'
+import userValidationCookie from '@/utils/checkValidInfo'
+import { useRouter } from 'next/router'
 
 const initialTempData1 = [
   {
@@ -65,7 +67,7 @@ const initialTempData1 = [
   },
 ]
 
-const DashboardApp = () => {
+const DashboardPage = () => {
   const [rows, setRows] = useState(initialTempData)
   const columns = [
     {
@@ -148,7 +150,6 @@ const DashboardApp = () => {
 
   return (
     <>
-      <AppLayout title={'Drive X Port - Dashboard'}>
         <Box
           sx={{
             height: '95%',
@@ -162,19 +163,9 @@ const DashboardApp = () => {
             columns={columns}
           />
         </Box>
-      </AppLayout>
     </>
   )
 }
 
-export const getServerSideProps = async ({ req, res }) => {
 
-
-  return {
-    props: {
-      products: [],
-    },
-  }
-}
-
-export default DashboardApp
+export default DashboardPage

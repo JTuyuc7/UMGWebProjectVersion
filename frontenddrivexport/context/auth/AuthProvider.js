@@ -1,6 +1,6 @@
 import { useReducer } from "react"
 import { AuthContext, authReducer } from "./"
-import { driveXportApi } from "@/api"
+import { driveXportApi, localBackendApi } from "@/api"
 import { toast } from "react-toastify"
 import { useRouter } from "next/router"
 
@@ -9,9 +9,9 @@ const AuthState = {
   isLoggedin: false,
   isSuperAdmin: false,
   token: '',
-  user: {
-    
-  }
+  user: {},
+  // userId: null,
+  // userFullName: ''
 }
 
 export const AuthProvier = ({ children }) => {
@@ -22,40 +22,25 @@ export const AuthProvier = ({ children }) => {
   const loginUseer = async (email, password) => {
 
     try {
-      const { data } = await driveXportApi.post('/users/login', { email, password })
-      console.log("🚀 ~ file: AuthProvider.js:26 ~ loginUseer ~ data:", data)
-      if (data.status === 400) { 
-        toast.error(data.message)
-        return
-      }
-
-      if (data.status === 200) { 
-        router.replace('/app')
-      }
-
+      const data = await localBackendApi.post('/auth/login', { email, password })
+      toast.success("Welcome back")
+      dispatch({ type: '[AUTH] - login', payload: data.data.user })
+      router.replace('/')
     } catch (error) {
-      console.log(error, 'Unable to log in')
-      toast.error('Something went wrong, try again later')
+      console.log(error.response, 'Unable to log in')
+      toast.error(error.response.data.message)
     }
   }
 
   const registerNewUser = async (dataBody) => {
     try {
-      const { data } = await driveXportApi.post('/users', dataBody)
-      
-      if (data.status === 201) { 
-        toast.success(data.message)
-        //TODO: guardar la sesion del usuario
-        router.replace('/app')
-        return
-      }
-      if (data.status === 422) { 
-        toast.warning(data.message)
-        return
-      }
+      const data = await localBackendApi.post('/auth/register', dataBody)
+      toast.success(data.data.message)
+      dispatch({ type: '[AUTH] - login', payload: data.data.user })
+      router.replace('/')
     } catch (error) {
       console.log(error, 'Error while registering the user')
-      toast.error("Unable to create your account, try again later")
+      toast.error(error.response.data.message)
     }
   }
 

@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
             response.setUser(singleUserfound.get());
         }else {
             response.setMessage("Please check your credentials.");
-            response.setStatus(400);
+            response.setStatus(401);
 
         }
 
