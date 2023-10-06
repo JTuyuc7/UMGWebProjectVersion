@@ -76,7 +76,7 @@ export const SideBarNavigation = () => {
           }}
         >
           <List>
-            <ListItem button onClick={ () => navigate('/app')}>
+            <ListItem button onClick={ () => navigate('/')}>
               <ListItemIcon>
                 <DashboardCustomize sx={{ color: paletColors.witheColor }} />
               </ListItemIcon>
