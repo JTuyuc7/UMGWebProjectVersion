@@ -48,6 +48,7 @@ function stringAvatar(name) {
 
 export const SideBarNavigation = () => {
   const router = useRouter()
+  const isActiveLink = (path) => router.pathname === path
   const navigate = (url) => {
     router.push(url)
   }
@@ -76,35 +77,92 @@ export const SideBarNavigation = () => {
           }}
         >
           <List>
-            <ListItem button onClick={ () => navigate('/')}>
+            <ListItem
+              button
+              onClick={() => navigate('/')}
+              sx={{
+                backgroundColor: isActiveLink('/')
+                  ? paletColors.witheColor
+                  : paletColors.purple700,
+              }}
+            >
               <ListItemIcon>
-                <DashboardCustomize sx={{ color: paletColors.witheColor }} />
+                <DashboardCustomize
+                  sx={{
+                    color: isActiveLink('/')
+                      ? paletColors.purple700
+                      : paletColors.witheColor,
+                  }}
+                />
               </ListItemIcon>
 
               <ListItemText
                 primary={'Dashboard'}
-                sx={{ color: paletColors.witheColor, fontWeight: 'bold' }}
+                sx={{
+                  color: isActiveLink('/')
+                    ? paletColors.purple700
+                    : paletColors.witheColor,
+                  fontWeight: 'bold',
+                }}
               />
             </ListItem>
-            <ListItem button onClick={ () => navigate('/product/new')}>
+            <ListItem
+              button
+              onClick={() => navigate('/product/new')}
+              sx={{
+                backgroundColor: isActiveLink('/product/new')
+                  ? paletColors.witheColor
+                  : paletColors.purple700,
+              }}
+            >
               <ListItemIcon>
-                <AddBox sx={{ color: paletColors.witheColor }} />
+                <AddBox
+                  sx={{
+                    color: isActiveLink('/product/new')
+                      ? paletColors.purple700
+                      : paletColors.witheColor,
+                  }}
+                />
               </ListItemIcon>
 
               <ListItemText
                 primary={'New Product'}
-                sx={{ color: paletColors.witheColor, fontWeight: 'bold' }}
+                sx={{
+                  color: isActiveLink('/product/new')
+                    ? paletColors.purple700
+                    : paletColors.witheColor,
+                  fontWeight: 'bold',
+                }}
               />
             </ListItem>
 
-            <ListItem button onClick={ () => navigate('/sells/new')}>
+            <ListItem
+              button
+              onClick={() => navigate('/sells/new')}
+              sx={{
+                backgroundColor: isActiveLink('/sells/new')
+                  ? paletColors.witheColor
+                  : paletColors.purple700,
+              }}
+            >
               <ListItemIcon>
-                <Storefront sx={{ color: paletColors.witheColor }} />
+                <Storefront
+                  sx={{
+                    color: isActiveLink('/sells/new')
+                      ? paletColors.purple700
+                      : paletColors.witheColor,
+                  }}
+                />
               </ListItemIcon>
 
               <ListItemText
                 primary={'Sell'}
-                sx={{ color: paletColors.witheColor, fontWeight: 'bold' }}
+                sx={{
+                  color: isActiveLink('/sells/new')
+                    ? paletColors.purple700
+                    : paletColors.witheColor,
+                  fontWeight: 'bold',
+                }}
               />
             </ListItem>
           </List>
@@ -116,7 +174,7 @@ export const SideBarNavigation = () => {
                 variant="subtitle2"
                 sx={{ paddingY: 2, color: paletColors.witheColor }}
               >
-                Analucia Samayoa
+                Jaime Tuyuc
               </Typography>
             </Stack>
 

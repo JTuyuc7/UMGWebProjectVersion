@@ -1,79 +1,51 @@
-import { useState } from 'react'
-import { AppLayout } from '@/components/Layouts'
 import { DataGrid } from '@mui/x-data-grid'
-import { CreateOutlined, DeleteOutline } from '@mui/icons-material'
-import { initialTempData } from '@/components/dashboard/constants'
-import { Box, IconButton, Stack, Typography } from '@mui/material'
-import { driveXportApi } from '@/api'
-import userValidationCookie from '@/utils/checkValidInfo'
-import { useRouter } from 'next/router'
+import { AssessmentOutlined, CreateOutlined, DeleteOutline } from '@mui/icons-material'
+import { Box, Button, IconButton, Stack, Typography } from '@mui/material'
+import { useContext, useState } from 'react'
+import { ProductContext } from '@/context'
+import ModalEditProduct from './ModalEdit'
+import ModalDelete from './ModalDelete'
+import { paletColors } from '@/styles/StylesConstants'
 
-const initialTempData1 = [
-  {
-    product_code: 3,
-    product_name: 'Prueba',
-    product_price: 300,
-    product_qty: 0,
-    product_belongs_to: 1,
-    created_at: '2023-09-24 22:32:07.233000',
-  },
-  {
-    product_code: 4,
-    product_name: 'Prueba 1',
-    product_price: 300,
-    product_qty: 0,
-    product_belongs_to: 1,
-    created_at: '2023-09-24 22:32:07.233000',
-  },
-  {
-    product_code: 5,
-    product_name: 'A Prueba',
-    product_price: 300,
-    product_qty: 0,
-    product_belongs_to: 1,
-    created_at: '2023-09-24 22:32:07.233000',
-  },
-  {
-    product_code: 6,
-    product_name: 'Prueba --',
-    product_price: 300,
-    product_qty: 0,
-    product_belongs_to: 1,
-    created_at: '2023-09-24 22:32:07.233000',
-  },
-  {
-    product_code: 7,
-    product_name: 'Prueba 8',
-    product_price: 300,
-    product_qty: 0,
-    product_belongs_to: 1,
-    created_at: '2023-09-24 22:32:07.233000',
-  },
-  {
-    product_code: 8,
-    product_name: 'Prueba 7',
-    product_price: 300,
-    product_qty: 0,
-    product_belongs_to: 1,
-    created_at: '2023-09-24 22:32:07.233000',
-  },
-  {
-    product_code: 9,
-    product_name: 'Prueba',
-    product_price: 300,
-    product_qty: 0,
-    product_belongs_to: 1,
-    created_at: '2023-09-24 22:32:07.233000',
-  },
-]
+const DashboardPage = ({userId}) => {
+  const {
+    products,
+    startEditting,
+    cancelEditting,
+    startDeleting,
+    cancelDelete,
+    generateReportByUser
+  } = useContext(ProductContext)
+  const [openModal, setOpenModal] = useState(false)
+  const [modalCancel, setModalCancel] = useState(false)
+  const onHandlerClose = () => {
+    cancelEditting()
+    setOpenModal(false)
+  }
 
-const DashboardPage = () => {
-  const [rows, setRows] = useState(initialTempData)
+  const handleEditModal = (data) => {
+    startEditting(data)
+    setOpenModal(true)
+  }
+
+  const onHandleCloseDelete = () => {
+    cancelDelete()
+    setModalCancel(false)
+  }
+
+  const onHandleDeleteProduct = (product) => {
+    startDeleting(product)
+    setModalCancel(true)
+  }
+
+  const handleGenerateReport = () => {
+    generateReportByUser(userId)
+  }
+
   const columns = [
     {
       field: 'product_code',
       headerName: 'Product Code',
-      //width: 80,
       editable: false,
     },
     {
@@ -107,16 +79,15 @@ const DashboardPage = () => {
       field: 'product_belongs_to',
       headerName: 'User ID',
       type: 'number',
-      //width: 50,
       align: 'left',
       headerAlign: 'left',
       editable: false,
     },
     {
-      field: 'created_at',
+      field: 'createdAt',
       headerName: 'Last Modified',
       type: 'string',
-      width: 200,
+      width: 250,
       align: 'left',
       headerAlign: 'left',
       editable: false,
@@ -129,18 +100,15 @@ const DashboardPage = () => {
       renderCell: ({ row }) => {
         return (
           <Stack direction="row" spacing={2}>
-            <IconButton
-              aria-label="edit"
-              onClick={() => console.log('Edit', row.product_code)}
-            >
-              <CreateOutlined color="red" />
+            <IconButton aria-label="edit" onClick={() => handleEditModal(row)}>
+              <CreateOutlined sx={{ color: paletColors.purple700}}/>
             </IconButton>
 
             <IconButton
               aria-label="delete"
-              onClick={() => console.log('delete', row.product_code)}
+              onClick={() => onHandleDeleteProduct(row)}
             >
-              <DeleteOutline color="red" />
+              <DeleteOutline sx={{ color: paletColors.purple700}} />
             </IconButton>
           </Stack>
         )
@@ -150,22 +118,35 @@ const DashboardPage = () => {
 
   return (
     <>
+      <Box
+        sx={{
+          height: '95%',
+          width: '100%',
+        }}
+      >
         <Box
-          sx={{
-            height: '95%',
-            width: '100%',
-          }}
+          sx={{ justifyContent: 'space-between', display: 'flex'}}
         >
           <Typography variant="h5">All Products</Typography>
-          <DataGrid
-            getRowId={(row) => row.product_code}
-            rows={rows}
-            columns={columns}
-          />
+          <Button
+            variant='contained'
+            color='secondary'
+            startIcon={<AssessmentOutlined />}
+            disabled={products.lenght < 0}
+            onClick={handleGenerateReport}
+          >Genereate Report</Button>
         </Box>
+        <DataGrid
+          getRowId={(row) => row.product_code}
+          rows={products}
+          columns={columns}
+        />
+
+        <ModalEditProduct open={openModal} handleClose={onHandlerClose} />
+        <ModalDelete open={modalCancel} handleClose={onHandleCloseDelete} />
+      </Box>
     </>
   )
 }
-
 
 export default DashboardPage

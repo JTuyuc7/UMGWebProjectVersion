@@ -28,7 +28,7 @@ export const AuthProvier = ({ children }) => {
       router.replace('/')
     } catch (error) {
       console.log(error.response, 'Unable to log in')
-      toast.error(error.response.data.message)
+      toast.warning(error.response.data.message || 'Opps, something went wrong, try again later')
     }
   }
 
@@ -40,14 +40,20 @@ export const AuthProvier = ({ children }) => {
       router.replace('/')
     } catch (error) {
       console.log(error, 'Error while registering the user')
-      toast.error(error.response.data.message)
+      toast.warning(error.response.data.message)
     }
   }
+
+  const sessionLogginUser = (user) => {
+    dispatch({ type: '[AUTH] - login', payload: user })
+  }
+
 
   const values = {
     ...state,
     loginUseer,
-    registerNewUser
+    registerNewUser,
+    sessionLogginUser
   }
   return (
     <AuthContext.Provider value={values}>
