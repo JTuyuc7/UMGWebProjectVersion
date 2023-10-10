@@ -16,6 +16,8 @@ import {
 } from '@mui/icons-material'
 import { paletColors } from '@/styles/StylesConstants'
 import { useRouter } from 'next/router'
+import { useContext } from 'react'
+import { AuthContext, ProductContext } from '@/context'
 
 function stringToColor(string) {
   let hash = 0
@@ -47,10 +49,17 @@ function stringAvatar(name) {
 }
 
 export const SideBarNavigation = () => {
+  const { user, logoutUserHandler } = useContext(AuthContext)
+  const { logoutProducts } = useContext(ProductContext)
   const router = useRouter()
   const isActiveLink = (path) => router.pathname === path
   const navigate = (url) => {
     router.push(url)
+  }
+
+  const logoutHandler = () => {
+    logoutProducts()
+    logoutUserHandler()
   }
 
   return (
@@ -169,16 +178,16 @@ export const SideBarNavigation = () => {
 
           <List>
             <Stack direction={'column'} sx={{ alignItems: 'center' }}>
-              <Avatar {...stringAvatar('Analucia Samayoa')} />
+              <Avatar {...stringAvatar(`${user.user_name} ${user.last_name}`)} />
               <Typography
                 variant="subtitle2"
                 sx={{ paddingY: 2, color: paletColors.witheColor }}
               >
-                Jaime Tuyuc
+                {`${user.user_name} ${user.last_name}`}
               </Typography>
             </Stack>
 
-            <ListItem button sx={{ paddingY: 3 }}>
+            <ListItem button sx={{ paddingY: 3 }} onClick={logoutHandler}>
               <ListItemIcon>
                 <Logout sx={{ color: paletColors.witheColor }} />
               </ListItemIcon>

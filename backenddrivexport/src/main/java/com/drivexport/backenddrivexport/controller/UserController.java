@@ -8,9 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -44,6 +42,11 @@ public class UserController {
     @GetMapping
     public List<User> getAllUsers(){
         return userService.getAllUsers();
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logoutUserFromServer(){
+        return new ResponseEntity<>("User Logut", HttpStatus.OK);
     }
 
     //? Get by email password

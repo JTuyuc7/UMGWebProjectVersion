@@ -1,11 +1,10 @@
-import { useReducer } from "react"
-import { AuthContext, authReducer } from "./"
-import { driveXportApi, localBackendApi } from "@/api"
-import { toast } from "react-toastify"
-import { useRouter } from "next/router"
+import { useReducer } from 'react'
+import { AuthContext, authReducer } from './'
+import { localBackendApi } from '@/api'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
 
 const AuthState = {
-
   isLoggedin: false,
   isSuperAdmin: false,
   token: '',
@@ -15,20 +14,25 @@ const AuthState = {
 }
 
 export const AuthProvier = ({ children }) => {
-  const router = useRouter();
-  
-  const [state, dispatch] = useReducer(authReducer, AuthState)  
-  
-  const loginUseer = async (email, password) => {
+  const router = useRouter()
 
+  const [state, dispatch] = useReducer(authReducer, AuthState)
+
+  const loginUseer = async (email, password) => {
     try {
-      const data = await localBackendApi.post('/auth/login', { email, password })
-      toast.success("Welcome back")
+      const data = await localBackendApi.post('/auth/login', {
+        email,
+        password,
+      })
+      toast.success('Welcome back')
       dispatch({ type: '[AUTH] - login', payload: data.data.user })
       router.replace('/')
     } catch (error) {
       console.log(error.response, 'Unable to log in')
-      toast.warning(error.response.data.message || 'Opps, something went wrong, try again later')
+      toast.warning(
+        error.response.data.message ||
+          'Opps, something went wrong, try again later'
+      )
     }
   }
 
@@ -48,16 +52,23 @@ export const AuthProvier = ({ children }) => {
     dispatch({ type: '[AUTH] - login', payload: user })
   }
 
+  const logoutUserHandler = async () => {
+    try {
+      router.replace('/auth/login')
+      await localBackendApi.post(`/auth/logout`)
+      dispatch({ type: '[AUTH] - logout' })
+    } catch (error) {
+      console.log('Unable to logout xD')
+    }
+
+  }
 
   const values = {
     ...state,
     loginUseer,
     registerNewUser,
-    sessionLogginUser
+    sessionLogginUser,
+    logoutUserHandler,
   }
-  return (
-    <AuthContext.Provider value={values}>
-      {children}
-    </AuthContext.Provider>
-  )
+  return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>
 }

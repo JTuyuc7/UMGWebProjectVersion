@@ -12,7 +12,6 @@ export default function handler(req, res) {
 const generateReportByuser = async (req, res) => {
     
   const { id } = req.query
-  console.log("🚀 ~ file: [id].js:16 ~ generateReportByuser ~ userId:", id)
   let responseObj = {
     statusCode: 0,
     message: '',

@@ -1,7 +1,7 @@
 import { paletColors } from '@/styles/StylesConstants'
 import { Controller, useForm } from 'react-hook-form'
 
-const {
+import {
   Box,
   Typography,
   Grid,
@@ -9,7 +9,7 @@ const {
   TextField,
   Button,
   Chip,
-} = require('@mui/material')
+} from '@mui/material'
 
 export const FormNewProduct = ({handleAddNewProduct}) => {
   const {
