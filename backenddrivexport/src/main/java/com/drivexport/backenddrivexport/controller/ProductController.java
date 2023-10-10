@@ -55,7 +55,6 @@ public class ProductController {
     @GetMapping("/all/{id}")
     public ResponseEntity<List> getAllProductsByUserId(@PathVariable("id") Integer id){
         List<Product> productsByuser = productService.getAllProductByUser(id);
-        System.out.println(productsByuser+"productos de usuario");
         return ResponseEntity.ok(productsByuser);
 //        if(!productsByuser.isEmpty()){
 //            return ResponseEntity.ok(productsByuser);

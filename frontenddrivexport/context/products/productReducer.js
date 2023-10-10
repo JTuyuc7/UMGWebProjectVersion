@@ -39,6 +39,13 @@ export const productReducer = (state, action) => {
         ...state,
         products: state.products.filter( (product) => product.product_code != action.payload )
       }
+    case '[PRODUCT] - logout':
+      return {
+        ...state,
+        products: [],
+        loadingProducts: true,
+        singleProduct: {},
+      }
     default: {
       return state
     }

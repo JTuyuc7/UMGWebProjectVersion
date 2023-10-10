@@ -46,10 +46,12 @@ export const ProductProvider = ({ children }) => {
     dispatch({ type: '[PRODUCT] - edit', payload: {}})
   }
 
-  const onEditNewproduct = async (userId, productId, bodyToUpdate) => {
+  const onEditNewproduct = async (userId, productId, bodyToUpdate, shouldShowNotification = true) => {
     try {
       const response = await localBackendApi.put(`/products/${userId}/${productId}`, bodyToUpdate)
-      toast.success(response.data.message)
+      if (shouldShowNotification) {
+        toast.success(response.data.message)
+      }
       dispatch({ type: '[PRODUCT] - updated', payload: response.data.product })
     } catch (error) {
       toast.error('Unable to update the product')
@@ -86,6 +88,22 @@ export const ProductProvider = ({ children }) => {
     }
   }
 
+  const createInvoiceSell = async (userId, bodyInvoice, bodyProductUpdate) => {
+    try {
+      const response = await localBackendApi.post(`/products/${userId}`, bodyInvoice)
+      toast.success(response.data.message)
+      onEditNewproduct(userId, bodyInvoice.proudctId, bodyProductUpdate, false)
+      router.push('/')
+    } catch (error) {
+      toast.error('Unable to create the invoice :(')
+      console.log(error.response)
+    }
+  }
+
+  const logoutProducts = () => {
+    dispatch({ type: '[PRODUCT] - logout' })
+  }
+
   const values = {
     ...state,
     getAllProductsByUser,
@@ -96,7 +114,9 @@ export const ProductProvider = ({ children }) => {
     startDeleting,
     cancelDelete,
     deleteProductById,
-    generateReportByUser
+    generateReportByUser,
+    logoutProducts,
+    createInvoiceSell
   }
 
   return (

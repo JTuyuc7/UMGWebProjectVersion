@@ -1,6 +1,5 @@
 import { AuthLayout } from '@/components/Layouts/AuthLayout'
-import { AuthContext, authReducer } from '@/context'
-import userValidationCookie from '@/utils/checkValidInfo'
+import { AuthContext } from '@/context'
 import {
   Box,
   Button,
@@ -10,13 +9,10 @@ import {
   Typography,
 } from '@mui/material'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 const LoginPage = () => {
-  const router = useRouter()
-
   const { loginUseer } = useContext(AuthContext)
 
   const {

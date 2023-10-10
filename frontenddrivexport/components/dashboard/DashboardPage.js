@@ -132,7 +132,7 @@ const DashboardPage = ({userId}) => {
             variant='contained'
             color='secondary'
             startIcon={<AssessmentOutlined />}
-            disabled={products.lenght < 0}
+            disabled={products.length === 0}
             onClick={handleGenerateReport}
           >Genereate Report</Button>
         </Box>

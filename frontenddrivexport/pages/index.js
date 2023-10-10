@@ -28,7 +28,6 @@ export async function getServerSideProps(context) {
   const cookieHeader = req.headers.cookie || ''
   const cookies = parse(cookieHeader)
   const drivexportCookie = cookies.drivexport
-
   if (!drivexportCookie) {
     return {
       redirect: {
@@ -41,6 +40,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       user: JSON.parse(decodeURIComponent(drivexportCookie)) || {},
+      // user: {},
     },
   }
 }

@@ -8,6 +8,14 @@ export const authReducer = (state, action) => {
         // userId: action.payload.id,
         // userFullName: `${action.payload.user_name} ${action.payload.last_nam}`
       }
+    case '[AUTH] - logout':
+      return {
+        ...state,
+        isLoggedin: false,
+        isSuperAdmin: false,
+        token: '',
+        user: {},
+      }
     default: {
       return state
     }
